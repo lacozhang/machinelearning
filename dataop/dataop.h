@@ -1,7 +1,7 @@
 #include <string>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
-#include "../PartialElasticNet/util.h"
+#include "../train/util.h"
 
 #ifndef __DATA_OP_H__
 #define __DATA_OP_H__

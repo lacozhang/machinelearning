@@ -84,7 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\dataop\dataop.cpp" />
-    <ClCompile Include="..\PartialElasticNet\util.cpp" />
+    <ClCompile Include="..\train\util.cpp" />
     <ClCompile Include="cmdline.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelop.cpp" />

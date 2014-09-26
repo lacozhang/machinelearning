@@ -1,3 +1,11 @@
 *.pyc
 Debug/
 Release/
+*.log
+*.err
+*.prf
+*.filters
+*.user
+*.opensdf
+*.suo
+*.sdf

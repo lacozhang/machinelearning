@@ -30,6 +30,13 @@ void matrix_size_estimation(std::string featfile,
 
 	while( featsrc.good() ){
 		++row;
+
+		if( row % 1000 == 0 ){
+			std::cout << "." ;
+		} else if( row % 10000 == 0 ){
+			std::cout << "x" << std::endl;
+		}
+
 		int cnt = 0;
 
 		boost::sregex_token_iterator iter(line.begin(), line.end(),

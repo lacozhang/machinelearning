@@ -2,7 +2,8 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 
-void parse_cmd(int argc, char* argv[], std::string& modelpath, std::string& input, std::string& output){
+void parse_cmd(int argc, char* argv[], std::string& modelpath, std::string& input, std::string& output,
+			   bool& debug){
 
 	namespace po = boost::program_options;
 	po::options_description opts("program for predict classification result");
@@ -10,7 +11,8 @@ void parse_cmd(int argc, char* argv[], std::string& modelpath, std::string& inpu
 		("h,help", "produce help message")
 		("model", po::value<std::string>(), "directory contains each model")
 		("input", po::value<std::string>(), "input feat file")
-		("output", po::value<std::string>(), "predict results");
+		("output", po::value<std::string>(), "predict results")
+		("deubg", po::value<std::string>(), "whether to print wrong insts");
 
 	po::variables_map vm;
 	try {
@@ -27,14 +29,26 @@ void parse_cmd(int argc, char* argv[], std::string& modelpath, std::string& inpu
 		return ;
 	}
 
-	if( vm.count("h") || vm.count("help") ){
+	if( vm.count("h") || vm.count("help") || (0 == vm.size()) ){
 		std::cout << opts << std::endl;
-		return;
+		std::exit(-1);
 	}
 
-	input = vm["input"].as<std::string>();
-	modelpath = vm["model"].as<std::string>();
-	output = vm["output"].as<std::string>();
+	if( vm.count("input") ){
+		input = vm["input"].as<std::string>();
+	}
+
+	if( vm.count("model") ){
+		modelpath = vm["model"].as<std::string>();
+	}
+
+	if(vm.count("output")){
+		output = vm["output"].as<std::string>();
+	}
+
+	if( vm.count("debug") ){
+		debug = vm["debug"].as<bool>();
+	}
 
 	std::cout << "***  input file : " << input 
 		<< std::endl;

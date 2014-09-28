@@ -19,10 +19,12 @@ double savePredict(Models& m, boost::shared_ptr<DataMatrix>& dat,
 
 double usualTest(Models& m, sample& dat, int label);
 
+bool bDebug = false;
+
 int main(int argc, char* argv[]){
 
 	std::string input, model, output;
-	parse_cmd(argc, argv, model, input, output);
+	parse_cmd(argc, argv, model, input, output, bDebug);
 	Models m(model);
 
 	std::cout << " loading model " << std::endl;
@@ -56,7 +58,7 @@ double savePredict(Models& m, boost::shared_ptr<DataMatrix>& dat, boost::shared_
 
 		sink << pred << "\t" << labels->coeff(i) << std::endl;
 
-		if( pred != testLabels->coeff(i) ){
+		if( pred != testLabels->coeff(i) && bDebug ){
 			usualTest(m, k, testLabels->coeff(i));
 		}
 

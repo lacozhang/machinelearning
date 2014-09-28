@@ -9,3 +9,5 @@ Release/
 *.opensdf
 *.suo
 *.sdf
+obj/
+objd/

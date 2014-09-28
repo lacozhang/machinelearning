@@ -3,6 +3,11 @@
 #include<string>
 #include <boost/program_options.hpp>
 
-void parse_cmd(int argc, char* argv[], std::string& modelpath, std::string& input, std::string& output);
+void parse_cmd(int argc, 
+			   char* argv[], 
+			   std::string& modelpath, 
+			   std::string& input, 
+			   std::string& output,
+			   bool& debug);
 
 #endif // __CMD_LINE_H__

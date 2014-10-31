@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(EnvironmentConfig)" />
-  <Import Project="$(PackagesRoot)\Boost.Library\exports.props" />
-  <Import Project="$(PackagesRoot)\Boost.Library\exports_regex.props" />
-  <Import Project="$(PackagesRoot)\Boost.Library\exports_date_time.props" />
-  <Import Project="$(PackagesRoot)\Boost.Library\exports_program_options.props" />
-  <Import Project="$(PackagesRoot)\Boost.Library\exports_filesystem.props" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -25,13 +20,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -49,24 +44,26 @@
     <IncludePath>$(BoostIncludePath);D:\zhangyu\src\lbfgs\dataop;D:\zhangyu\src\tools\eigen;$(IncludePath)</IncludePath>
     <LibraryPath>D:\zhangyu\src\tools\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>D:\zhangyu\src\lbfgs\dataop;$(SourcePath)</SourcePath>
+    <OutDir>D:\zhangyu\src\lbfgs\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(BoostIncludePath);D:\zhangyu\src\lbfgs\include;D:\zhangyu\src\tools\eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>      
+      <AdditionalIncludeDirectories>D:\zhangyu\src\tools\boostx64\include\boost-1_56;D:\zhangyu\src\lbfgs\include;D:\zhangyu\src\tools\eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalLibraryDirectories>$(BoostLibraryPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\zhangyu\src\tools\boostx64\lib56;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
-    </Lib>    
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\dataop\dataop.cpp" />
@@ -78,12 +75,6 @@
   <ItemGroup>
     <ClInclude Include="cmdline.h" />
     <ClInclude Include="modelop.h" />
-  </ItemGroup>  
-  <ItemGroup>
-    <Robocopy Include="$(OutDir)">
-      <DestinationFolder>$(DistribPath)\tools\LUGDI\predict</DestinationFolder>
-      <IsRecursive>true</IsRecursive>
-    </Robocopy>
   </ItemGroup>
   <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -446,6 +446,7 @@ int lbfgs(
     }
     if (xnorm < 1.0) xnorm = 1.0;
     if (gnorm / xnorm <= param.epsilon) {
+		printf(" gnorm = %f / xnorm = %f \n", gnorm, xnorm);
         ret = LBFGS_ALREADY_MINIMIZED;
         goto lbfgs_exit;
     }

@@ -5,7 +5,7 @@
 #include <Eigen/Sparse>
 #include <Eigen/Dense>
 #include "dataop.h"
-#include "util.h"
+#include "../utils/util.h"
 
 boost::shared_ptr<boost::regex> tokenizer( new boost::regex("\\s+"));
 boost::shared_ptr<boost::regex> featvalpair(new boost::regex("^(\\d+):([\\d.+-]+)$"));
@@ -76,7 +76,7 @@ void matrix_size_estimation(std::string featfile,
 		std::getline(featsrc, line);
 	}
 
-	std::cout << "data size estimation costs " << t.toc() << std::endl;
+	std::cout << "\ndata size estimation costs " << t.toc() << std::endl;
 	datsize.resize(row);
 	for(int i=0; i < rowsize.size(); ++i){
 		datsize(i) = rowsize[i];
@@ -85,12 +85,20 @@ void matrix_size_estimation(std::string featfile,
 
 void load_data(std::string featfile, 
 			   boost::shared_ptr<Eigen::SparseMatrix<double, Eigen::RowMajor> >& Samples,
-			   boost::shared_ptr<Eigen::VectorXi>& labels){
+			   boost::shared_ptr<Eigen::VectorXi>& labels, int prow, int pcol){
 
 	// estimate the data size for loading
 	Eigen::VectorXi datasize;
 	int rowsize, colsize;
 	matrix_size_estimation(featfile, datasize, rowsize, colsize);
+
+	if( prow != -1 ){
+		rowsize = prow;
+	}
+
+	if( pcol != -1 ){
+		colsize = pcol;
+	}
 
 	std::cout << "finish the size estimation" << std::endl;
 
@@ -102,6 +110,7 @@ void load_data(std::string featfile,
 		std::cerr << "Error, new operator for samples error" << std::endl;
 		std::exit(-1);
 	}
+
 	Samples->reserve(datasize);
 	std::cout << "sample reserve success" << std::endl;
 
@@ -145,8 +154,15 @@ void load_data(std::string featfile,
 		}
 
 		++nrow;
+
+		if(nrow % 100000 == 0){
+			std::cout << "x" << std::endl;
+		} else if( nrow % 10000 == 0 ){
+			std::cout << ".";
+		}
+
 		std::getline(ifs, line);
 	}
 	Samples->makeCompressed();
-	std::cout << " loading data costs " << t.toc() << " seconds " << std::endl;
+	std::cout << "\n loading data costs " << t.toc() << " seconds " << std::endl;
 }
